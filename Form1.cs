@@ -1,126 +1,177 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Kien
+namespace Fighter_Jet_Shooting_Game_MOO_ICT
 {
     public partial class Form1 : Form
     {
+
+        bool goLeft, goRight, shooting, isGameOver;
+        int score;
+        int playerSpeed = 12;
+        int enemySpeed;
+        int bulletSpeed;
+        Random rnd = new Random();
+
+
         public Form1()
         {
             InitializeComponent();
+            resetGame();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void mainGameTimerEvent(object sender, EventArgs e)
         {
-            // Placeholder Username
-            textBoxUser.Text = "Tên đăng nhập";
-            textBoxUser.ForeColor = Color.Gray;
 
-            // Placeholder Password
-            textBoxPass.Text = "Mật khẩu";
-            textBoxPass.ForeColor = Color.Gray;
-            textBoxPass.UseSystemPasswordChar = false;
+            txtScore.Text = score.ToString();
 
-            // Sự kiện user
-            textBoxUser.Enter += (s, ev) =>
-            {
-                if (textBoxUser.Text == "Tên đăng nhập")
-                {
-                    textBoxUser.Text = "";
-                    textBoxUser.ForeColor = Color.Black;
-                }
-            };
-            textBoxUser.Leave += (s, ev) =>
-            {
-                if (string.IsNullOrWhiteSpace(textBoxUser.Text))
-                {
-                    textBoxUser.Text = "Tên đăng nhập";
-                    textBoxUser.ForeColor = Color.Gray;
-                }
-            };
 
-            // Sự kiện password
-            textBoxPass.Enter += (s, ev) =>
-            {
-                if (textBoxPass.Text == "Mật khẩu")
-                {
-                    textBoxPass.Text = "";
-                    textBoxPass.ForeColor = Color.Black;
-                    textBoxPass.UseSystemPasswordChar = !checkBoxShow.Checked;
-                }
-            };
-            textBoxPass.Leave += (s, ev) =>
-            {
-                if (string.IsNullOrWhiteSpace(textBoxPass.Text))
-                {
-                    textBoxPass.Text = "Mật khẩu";
-                    textBoxPass.ForeColor = Color.Gray;
-                    textBoxPass.UseSystemPasswordChar = false;
-                }
-            };
+            enemyOne.Top += enemySpeed;
+            enemyTwo.Top += enemySpeed;
+            enemyThree.Top += enemySpeed;
 
-            // CheckBox hiển thị mật khẩu
-            checkBoxShow.CheckedChanged += (s, ev) =>
-            {
-                if (textBoxPass.Text != "Mật khẩu")
-                {
-                    textBoxPass.UseSystemPasswordChar = !checkBoxShow.Checked;
-                }
-            };
-        }
 
-        // Đăng nhập
-        private void buttonLogin_Click(object sender, EventArgs e)
-        {
-            string user = textBoxUser.Text.Trim();
-            string pass = textBoxPass.Text.Trim();
-
-            if (user == "Tên đăng nhập" || pass == "Mật khẩu")
+            if(enemyOne.Top > 710 || enemyTwo.Top > 710 || enemyThree.Top > 710)
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                gameOver();
             }
 
-            if (user == AccountData.Username && pass == AccountData.Password)
-            {
-                MessageBox.Show("Đăng nhập thành công!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Mở Form3 sau khi login thành công
-                this.Hide();
-                Form3 f3 = new Form3();
-                f3.ShowDialog();
-                this.Show();
+
+            // player movement logic starts
+
+            if(goLeft == true && player.Left > 0)
+            {
+                player.Left -= playerSpeed;
+            }
+            if(goRight == true && player.Left < 688)
+            {
+                player.Left += playerSpeed;
+            }
+            // player movement logic ends
+
+            if(shooting == true)
+            {
+                bulletSpeed = 20;
+                bullet.Top -= bulletSpeed;
             }
             else
             {
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                bullet.Left = -300;
+                bulletSpeed = 0;
             }
-        }
 
-        // Mở form đăng ký
-        private void buttonRegister_Click(object sender, EventArgs e)
-        {
-            Form2 dk = new Form2();
-            dk.ShowDialog();
-
-            if (!string.IsNullOrEmpty(AccountData.Username) && !string.IsNullOrEmpty(AccountData.Password))
+            if(bullet.Top < -30)
             {
-                MessageBox.Show("Đăng ký thành công! Hãy đăng nhập bằng tài khoản mới.",
-                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                shooting = false;
+            }
+
+            if(bullet.Bounds.IntersectsWith(enemyOne.Bounds))
+            {
+                score += 1;
+                enemyOne.Top = -450;
+                enemyOne.Left = rnd.Next(20, 600);
+                shooting = false;
+            }
+            if (bullet.Bounds.IntersectsWith(enemyTwo.Bounds))
+            {
+                score += 1;
+                enemyTwo.Top = -650;
+                enemyTwo.Left = rnd.Next(20, 600);
+                shooting = false;
+            }
+            if (bullet.Bounds.IntersectsWith(enemyThree.Bounds))
+            {
+                score += 1;
+                enemyThree.Top = -750;
+                enemyThree.Left = rnd.Next(20, 600);
+                shooting = false;
+            }
+
+            if(score == 5)
+            {
+                enemySpeed = 10;
+            }
+            if(score == 10)
+            {
+                enemySpeed = 15;
+            }
+
+
+        }
+
+        private void keyisdown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Left)
+            {
+                goLeft = true;
+            }
+            if(e.KeyCode == Keys.Right)
+            {
+                goRight = true;
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void keyisup(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Left)
+            {
+                goLeft = false;
+            }
+            if (e.KeyCode == Keys.Right)
+            {
+                goRight = false;
+            }
+            if(e.KeyCode == Keys.Space && shooting == false)
+            {
+                shooting = true;
+
+                bullet.Top = player.Top - 30;
+                bullet.Left = player.Left + (player.Width /2);
+
+            }
+            if(e.KeyCode == Keys.Enter && isGameOver == true)
+            {
+                resetGame();
+            }
+        }
+
+        private void resetGame()
+        {
+            gameTimer.Start();
+            enemySpeed = 6;
+
+
+            enemyOne.Left = rnd.Next(20, 600);
+            enemyTwo.Left = rnd.Next(20, 600);
+            enemyThree.Left = rnd.Next(20, 600);
+
+            enemyOne.Top = rnd.Next(0, 200) * -1;
+            enemyTwo.Top = rnd.Next(0, 500) * -1;
+            enemyThree.Top = rnd.Next(0, 900) *-1;
+
+            score = 0;
+            bulletSpeed = 0;
+            bullet.Left = -300;
+            shooting = false;
+
+
+            txtScore.Text = score.ToString();
 
         }
 
-        private void textBoxPass_TextChanged(object sender, EventArgs e)
+        private void gameOver()
         {
+            isGameOver = true;
+            gameTimer.Stop();
+            txtScore.Text += Environment.NewLine + "Game Over!!" + Environment.NewLine + "Press Enter to try again.";
 
         }
     }
