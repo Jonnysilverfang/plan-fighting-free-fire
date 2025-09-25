@@ -1,8 +1,11 @@
-﻿namespace Kien
+namespace Kien
 {
     public static class AccountData
     {
-        public static string Username = "admin";
-        public static string Password = "123";
+        public static string Username;
+        public static string Password;
+        public static int Gold;
+        public static int UpgradeHP;
+        public static int UpgradeDamage;
     }
 }
