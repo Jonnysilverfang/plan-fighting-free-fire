@@ -1,16 +1,20 @@
-﻿namespace Fighter_Jet_Shooting_Game_MOO_ICT
+namespace Kien
 {
     partial class Form1
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private TextBox textBoxUser;
+        private TextBox textBoxPass;
+        private Button buttonLogin;
+        private Button buttonRegister;
+        private CheckBox checkBoxShow;
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
+        private Label label1;
+        private Label label2;
+        private Label label3;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,129 +24,171 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.enemyOne = new System.Windows.Forms.PictureBox();
-            this.enemyTwo = new System.Windows.Forms.PictureBox();
-            this.enemyThree = new System.Windows.Forms.PictureBox();
-            this.bullet = new System.Windows.Forms.PictureBox();
-            this.player = new System.Windows.Forms.PictureBox();
-            this.txtScore = new System.Windows.Forms.Label();
-            this.gameTimer = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.enemyOne)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.enemyTwo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.enemyThree)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bullet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            textBoxUser = new TextBox();
+            textBoxPass = new TextBox();
+            buttonLogin = new Button();
+            buttonRegister = new Button();
+            checkBoxShow = new CheckBox();
+            pictureBox1 = new PictureBox();
+            pictureBox2 = new PictureBox();
+            pictureBox3 = new PictureBox();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            SuspendLayout();
             // 
-            // enemyOne
+            // textBoxUser
             // 
-            this.enemyOne.Image = global::Fighter_Jet_Shooting_Game_MOO_ICT.Properties.Resources.enemy;
-            this.enemyOne.Location = new System.Drawing.Point(26, 62);
-            this.enemyOne.Name = "enemyOne";
-            this.enemyOne.Size = new System.Drawing.Size(100, 85);
-            this.enemyOne.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.enemyOne.TabIndex = 0;
-            this.enemyOne.TabStop = false;
+            textBoxUser.Font = new Font("Segoe UI", 10.2F);
+            textBoxUser.ForeColor = Color.FromArgb(0, 192, 192);
+            textBoxUser.Location = new Point(120, 216);
+            textBoxUser.Name = "textBoxUser";
+            textBoxUser.Size = new Size(200, 30);
+            textBoxUser.TabIndex = 0;
+            textBoxUser.Text = "Nhập tên đăng nhập";
             // 
-            // enemyTwo
+            // textBoxPass
             // 
-            this.enemyTwo.Image = global::Fighter_Jet_Shooting_Game_MOO_ICT.Properties.Resources.enemy;
-            this.enemyTwo.Location = new System.Drawing.Point(334, 62);
-            this.enemyTwo.Name = "enemyTwo";
-            this.enemyTwo.Size = new System.Drawing.Size(100, 85);
-            this.enemyTwo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.enemyTwo.TabIndex = 0;
-            this.enemyTwo.TabStop = false;
+            textBoxPass.Font = new Font("Segoe UI", 10.2F);
+            textBoxPass.ForeColor = Color.FromArgb(0, 192, 192);
+            textBoxPass.Location = new Point(120, 268);
+            textBoxPass.Name = "textBoxPass";
+            textBoxPass.Size = new Size(200, 30);
+            textBoxPass.TabIndex = 1;
+            textBoxPass.Text = "Nhập mật khẩu";
+            // ❌ Bỏ dòng này đi: textBoxPass.TextChanged += textBoxPass_TextChanged;
             // 
-            // enemyThree
+            // buttonLogin
             // 
-            this.enemyThree.Image = global::Fighter_Jet_Shooting_Game_MOO_ICT.Properties.Resources.enemy;
-            this.enemyThree.Location = new System.Drawing.Point(664, 62);
-            this.enemyThree.Name = "enemyThree";
-            this.enemyThree.Size = new System.Drawing.Size(100, 85);
-            this.enemyThree.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.enemyThree.TabIndex = 0;
-            this.enemyThree.TabStop = false;
+            buttonLogin.Font = new Font("Segoe UI", 10.2F);
+            buttonLogin.ForeColor = Color.FromArgb(0, 192, 192);
+            buttonLogin.Location = new Point(101, 342);
+            buttonLogin.Name = "buttonLogin";
+            buttonLogin.Size = new Size(112, 40);
+            buttonLogin.TabIndex = 2;
+            buttonLogin.Text = "Đăng nhập";
+            buttonLogin.UseVisualStyleBackColor = true;
+            buttonLogin.Click += buttonLogin_Click;
             // 
-            // bullet
+            // buttonRegister
             // 
-            this.bullet.Image = global::Fighter_Jet_Shooting_Game_MOO_ICT.Properties.Resources.bullet;
-            this.bullet.Location = new System.Drawing.Point(473, 304);
-            this.bullet.Name = "bullet";
-            this.bullet.Size = new System.Drawing.Size(7, 27);
-            this.bullet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.bullet.TabIndex = 0;
-            this.bullet.TabStop = false;
+            buttonRegister.Font = new Font("Segoe UI", 10.2F);
+            buttonRegister.ForeColor = Color.FromArgb(0, 192, 192);
+            buttonRegister.Location = new Point(247, 342);
+            buttonRegister.Name = "buttonRegister";
+            buttonRegister.Size = new Size(112, 40);
+            buttonRegister.TabIndex = 3;
+            buttonRegister.Text = "Đăng ký";
+            buttonRegister.UseVisualStyleBackColor = true;
+            buttonRegister.Click += buttonRegister_Click;
             // 
-            // player
+            // checkBoxShow
             // 
-            this.player.Image = global::Fighter_Jet_Shooting_Game_MOO_ICT.Properties.Resources.player;
-            this.player.Location = new System.Drawing.Point(334, 564);
-            this.player.Name = "player";
-            this.player.Size = new System.Drawing.Size(110, 98);
-            this.player.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.player.TabIndex = 0;
-            this.player.TabStop = false;
+            checkBoxShow.AutoSize = true;
+            checkBoxShow.FlatStyle = FlatStyle.Flat;
+            checkBoxShow.Font = new Font("Segoe UI", 10.2F);
+            checkBoxShow.ForeColor = Color.FromArgb(0, 192, 192);
+            checkBoxShow.Location = new Point(163, 304);
+            checkBoxShow.Name = "checkBoxShow";
+            checkBoxShow.Size = new Size(140, 27);
+            checkBoxShow.TabIndex = 4;
+            checkBoxShow.Text = "Hiện mật khẩu";
+            checkBoxShow.UseVisualStyleBackColor = true;
             // 
-            // txtScore
+            // pictureBox1
             // 
-            this.txtScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScore.Location = new System.Drawing.Point(0, 277);
-            this.txtScore.Name = "txtScore";
-            this.txtScore.Size = new System.Drawing.Size(798, 150);
-            this.txtScore.TabIndex = 1;
-            this.txtScore.Text = "0";
-            this.txtScore.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
+            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox1.Location = new Point(318, -2);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(125, 62);
+            pictureBox1.TabIndex = 5;
+            pictureBox1.TabStop = false;
             // 
-            // gameTimer
+            // pictureBox2
             // 
-            this.gameTimer.Interval = 20;
-            this.gameTimer.Tick += new System.EventHandler(this.mainGameTimerEvent);
+            pictureBox2.BackgroundImage = (Image)resources.GetObject("pictureBox2.BackgroundImage");
+            pictureBox2.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox2.Location = new Point(146, 113);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(161, 97);
+            pictureBox2.TabIndex = 6;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackgroundImage = (Image)resources.GetObject("pictureBox3.BackgroundImage");
+            pictureBox3.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox3.Location = new Point(-5, 383);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(125, 62);
+            pictureBox3.TabIndex = 7;
+            pictureBox3.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 163);
+            label1.ForeColor = Color.FromArgb(0, 192, 192);
+            label1.Location = new Point(163, 46);
+            label1.Name = "label1";
+            label1.Size = new Size(145, 54);
+            label1.TabIndex = 8;
+            label1.Text = "LOGIN";
+            // ❌ Bỏ dòng này đi: label1.Click += label1_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
+            label2.ForeColor = Color.FromArgb(0, 192, 192);
+            label2.Location = new Point(87, 219);
+            label2.Name = "label2";
+            label2.Size = new Size(34, 23);
+            label2.TabIndex = 9;
+            label2.Text = "👤";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
+            label3.ForeColor = Color.FromArgb(0, 192, 192);
+            label3.Location = new Point(87, 271);
+            label3.Name = "label3";
+            label3.Size = new Size(34, 23);
+            label3.TabIndex = 10;
+            label3.Text = "🔒";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(800, 674);
-            this.Controls.Add(this.player);
-            this.Controls.Add(this.bullet);
-            this.Controls.Add(this.enemyThree);
-            this.Controls.Add(this.enemyTwo);
-            this.Controls.Add(this.enemyOne);
-            this.Controls.Add(this.txtScore);
-            this.Name = "Form1";
-            this.Text = "Fighet Jet Shooting Game MOOI CT";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyisdown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyisup);
-            ((System.ComponentModel.ISupportInitialize)(this.enemyOne)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.enemyTwo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.enemyThree)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bullet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(439, 441);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(pictureBox3);
+            Controls.Add(pictureBox2);
+            Controls.Add(pictureBox1);
+            Controls.Add(textBoxUser);
+            Controls.Add(textBoxPass);
+            Controls.Add(buttonLogin);
+            Controls.Add(buttonRegister);
+            Controls.Add(checkBoxShow);
+            Name = "Form1";
+            Text = "Đăng nhập";
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
-
-        #endregion
-
-        private System.Windows.Forms.PictureBox enemyOne;
-        private System.Windows.Forms.PictureBox enemyTwo;
-        private System.Windows.Forms.PictureBox enemyThree;
-        private System.Windows.Forms.PictureBox bullet;
-        private System.Windows.Forms.PictureBox player;
-        private System.Windows.Forms.Label txtScore;
-        private System.Windows.Forms.Timer gameTimer;
     }
 }
-
