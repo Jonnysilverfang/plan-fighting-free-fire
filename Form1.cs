@@ -13,16 +13,16 @@ namespace Kien
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Placeholder Username
+            // Placeholder cho Username
             textBoxUser.Text = "Tên đăng nhập";
             textBoxUser.ForeColor = Color.Gray;
 
-            // Placeholder Password
+            // Placeholder cho Password
             textBoxPass.Text = "Mật khẩu";
             textBoxPass.ForeColor = Color.Gray;
             textBoxPass.UseSystemPasswordChar = false;
 
-            // Sự kiện user
+            // Sự kiện Enter/Leave cho textBoxUser
             textBoxUser.Enter += (s, ev) =>
             {
                 if (textBoxUser.Text == "Tên đăng nhập")
@@ -40,14 +40,14 @@ namespace Kien
                 }
             };
 
-            // Sự kiện password
+            // Sự kiện Enter/Leave cho textBoxPass
             textBoxPass.Enter += (s, ev) =>
             {
                 if (textBoxPass.Text == "Mật khẩu")
                 {
                     textBoxPass.Text = "";
                     textBoxPass.ForeColor = Color.Black;
-                    textBoxPass.UseSystemPasswordChar = !checkBoxShow.Checked;
+                    textBoxPass.UseSystemPasswordChar = true;
                 }
             };
             textBoxPass.Leave += (s, ev) =>
@@ -59,53 +59,49 @@ namespace Kien
                     textBoxPass.UseSystemPasswordChar = false;
                 }
             };
-
-            // CheckBox hiển thị mật khẩu
-            checkBoxShow.CheckedChanged += (s, ev) =>
-            {
-                if (textBoxPass.Text != "Mật khẩu")
-                {
-                    textBoxPass.UseSystemPasswordChar = !checkBoxShow.Checked;
-                }
-            };
         }
 
-        // Đăng nhập
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            string user = textBoxUser.Text.Trim();
-            string pass = textBoxPass.Text.Trim();
+            string username = textBoxUser.Text.Trim();
+            string password = textBoxPass.Text.Trim();
 
-            if (user == "Tên đăng nhập" || pass == "Mật khẩu")
+            if (username == "Tên đăng nhập" || password == "Mật khẩu")
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi",
+                MessageBox.Show("Vui lòng nhập đầy đủ!", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (Database.CheckLogin(user, pass)) // ✅ gọi Database để kiểm tra
-            {
-                MessageBox.Show("Đăng nhập thành công!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            bool loginSuccess = Database.CheckLogin(username, password);
 
-                // Mở Form3 sau khi login thành công
+            if (loginSuccess)
+            {
+                // Lấy thông tin account từ database
+                Database.LoadAccountData(username);
+
+                // Cập nhật tên đăng nhập hiện tại
+                AccountData.Username = username;
+                AccountData.Password = password;
+
+                MessageBox.Show($"Đăng nhập thành công! Vàng: {AccountData.Gold}", "Thông báo");
+
+                // Mở Form3 (menu)
+                Form3 form3 = new Form3();
+                form3.Show();
                 this.Hide();
-                Form3 f3 = new Form3();
-                f3.ShowDialog();
-                this.Show();
             }
             else
             {
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi",
+                MessageBox.Show("Tên đăng nhập hoặc mật khẩu sai!", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // Mở form đăng ký
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            Form2 dk = new Form2();
-            dk.ShowDialog();
+            Form2 form2 = new Form2(); // form đăng ký
+            form2.ShowDialog();
         }
     }
 }
