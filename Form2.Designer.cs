@@ -1,4 +1,4 @@
-﻿namespace Kien
+namespace Kien
 {
     partial class Form2
     {
