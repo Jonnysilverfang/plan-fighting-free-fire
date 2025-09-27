@@ -22,7 +22,7 @@ namespace Kien
             textBoxPass.ForeColor = Color.Gray;
             textBoxPass.UseSystemPasswordChar = false;
 
-            // Sự kiện Enter/Leave cho textBoxUser
+            // --- XỬ LÝ PLACEHOLDER USERNAME ---
             textBoxUser.Enter += (s, ev) =>
             {
                 if (textBoxUser.Text == "Tên đăng nhập")
@@ -40,16 +40,17 @@ namespace Kien
                 }
             };
 
-            // Sự kiện Enter/Leave cho textBoxPass
+            // --- XỬ LÝ PLACEHOLDER PASSWORD ---
             textBoxPass.Enter += (s, ev) =>
             {
                 if (textBoxPass.Text == "Mật khẩu")
                 {
                     textBoxPass.Text = "";
                     textBoxPass.ForeColor = Color.Black;
-                    textBoxPass.UseSystemPasswordChar = true;
                 }
+                textBoxPass.UseSystemPasswordChar = !checkBoxShow.Checked;
             };
+
             textBoxPass.Leave += (s, ev) =>
             {
                 if (string.IsNullOrWhiteSpace(textBoxPass.Text))
@@ -58,6 +59,13 @@ namespace Kien
                     textBoxPass.ForeColor = Color.Gray;
                     textBoxPass.UseSystemPasswordChar = false;
                 }
+            };
+
+            // --- HIỆN/ẨN MẬT KHẨU ---
+            checkBoxShow.CheckedChanged += (s, ev) =>
+            {
+                if (textBoxPass.Text != "Mật khẩu")
+                    textBoxPass.UseSystemPasswordChar = !checkBoxShow.Checked;
             };
         }
 
@@ -77,16 +85,12 @@ namespace Kien
 
             if (loginSuccess)
             {
-                // Lấy thông tin account từ database
                 Database.LoadAccountData(username);
-
-                // Cập nhật tên đăng nhập hiện tại
                 AccountData.Username = username;
                 AccountData.Password = password;
 
-                MessageBox.Show($"Đăng nhập thành công! Vàng: {AccountData.Gold}", "Thông báo");
+                MessageBox.Show("Đăng nhập thành công!");
 
-                // Mở Form3 (menu)
                 Form3 form3 = new Form3();
                 form3.Show();
                 this.Hide();
@@ -100,8 +104,14 @@ namespace Kien
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2(); // form đăng ký
+            Form2 form2 = new Form2();
             form2.ShowDialog();
+        }
+
+        private void Form1_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
+
