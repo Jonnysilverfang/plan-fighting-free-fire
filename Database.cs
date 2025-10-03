@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
@@ -6,11 +6,8 @@ namespace Kien
 {
     public static class Database
     {
-        // 👉 Nếu muốn chạy ngay với admin theo ảnh bạn gửi:
-        //    Đổi <ADMIN_PASSWORD> thành mật khẩu thực tế (bạn nói là "Kiennguly").
-        //    Khuyến nghị: sau khi test, tạo user app riêng (bên dưới có script).
         private static readonly string connectionString =
-            "Server=tcp:database-1.c3gooss4uoib.ap-southeast-2.rds.amazonaws.com,1433;" +
+            "Server=tcp:database-2.c3gooss4uoib.ap-southeast-2.rds.amazonaws.com,1433;" +
             "Database=UserDB;User ID=admin;Password=Kiennguly;" +
             "Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;";
 
@@ -31,7 +28,7 @@ namespace Kien
         {
             using var conn = new SqlConnection(connectionString);
             conn.Open();
-            const string sql = "SELECT Gold, UpgradeHP, UpgradeDamage FROM dbo.Accounts WHERE Username=@user";
+            const string sql = "SELECT Gold, UpgradeHP, UpgradeDamage, Level FROM dbo.Accounts WHERE Username=@user";
             using var cmd = new SqlCommand(sql, conn);
             cmd.Parameters.Add("@user", SqlDbType.NVarChar, 50).Value = username;
             using var reader = cmd.ExecuteReader();
@@ -41,6 +38,7 @@ namespace Kien
                 AccountData.Gold = reader.GetInt32(0);
                 AccountData.UpgradeHP = reader.GetInt32(1);
                 AccountData.UpgradeDamage = reader.GetInt32(2);
+                AccountData.Level = reader.GetInt32(3); // Lấy level từ cơ sở dữ liệu
                 return true;
             }
             return false;
@@ -61,8 +59,8 @@ namespace Kien
 
             // Insert
             using (var cmd = new SqlCommand(
-                @"INSERT INTO dbo.Accounts (Username, Password, Gold, UpgradeHP, UpgradeDamage)
-                  VALUES (@user, @pass, 0, 0, 0)", conn))
+                @"INSERT INTO dbo.Accounts (Username, Password, Gold, UpgradeHP, UpgradeDamage, Level)
+                  VALUES (@user, @pass, 0, 0, 0, 1)", conn)) // Set level default as 1
             {
                 cmd.Parameters.Add("@user", SqlDbType.NVarChar, 50).Value = username;
                 cmd.Parameters.Add("@pass", SqlDbType.NVarChar, 200).Value = password;
@@ -71,19 +69,20 @@ namespace Kien
             return true;
         }
 
-        // Cập nhật vàng/nâng cấp
+        // Cập nhật vàng, nâng cấp và level
         public static void UpdateAccountData()
         {
             using var conn = new SqlConnection(connectionString);
             conn.Open();
             using var cmd = new SqlCommand(
                 @"UPDATE dbo.Accounts
-                  SET Gold=@gold, UpgradeHP=@hp, UpgradeDamage=@dmg
+                  SET Gold=@gold, UpgradeHP=@hp, UpgradeDamage=@dmg, Level=@level
                   WHERE Username=@user", conn);
 
             cmd.Parameters.Add("@gold", SqlDbType.Int).Value = AccountData.Gold;
             cmd.Parameters.Add("@hp", SqlDbType.Int).Value = AccountData.UpgradeHP;
             cmd.Parameters.Add("@dmg", SqlDbType.Int).Value = AccountData.UpgradeDamage;
+            cmd.Parameters.Add("@level", SqlDbType.Int).Value = AccountData.Level; // Lưu Level
             cmd.Parameters.Add("@user", SqlDbType.NVarChar, 50).Value = AccountData.Username;
             cmd.ExecuteNonQuery();
         }
