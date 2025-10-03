@@ -59,10 +59,10 @@ namespace Kien
             textBoxPass.ForeColor = Color.FromArgb(0, 192, 192);
             textBoxPass.Location = new Point(120, 268);
             textBoxPass.Name = "textBoxPass";
+            textBoxPass.PlaceholderText = "Nhập mật khẩu ";
             textBoxPass.Size = new Size(200, 30);
             textBoxPass.TabIndex = 1;
-            textBoxPass.Text = "Nhập mật khẩu";
-            // ❌ Bỏ dòng này đi: textBoxPass.TextChanged += textBoxPass_TextChanged;
+            textBoxPass.Text = "Nhập mật khẩu ";
             // 
             // buttonLogin
             // 
@@ -141,7 +141,6 @@ namespace Kien
             label1.Size = new Size(145, 54);
             label1.TabIndex = 8;
             label1.Text = "LOGIN";
-            // ❌ Bỏ dòng này đi: label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -184,6 +183,7 @@ namespace Kien
             Controls.Add(checkBoxShow);
             Name = "Form1";
             Text = "Đăng nhập";
+            Load += Form1_Load_1;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
