@@ -23,12 +23,17 @@ namespace Kien
         private void Form4_Load(object sender, EventArgs e)
         {
             // Cài máu cho player và boss
-            playerHealthBar.Maximum =  AccountData.UpgradeHP;
-            playerHealthBar.Value = playerHealthBar.Maximum;
-            bossHealthBar.Maximum = 1000;
-            bossHealthBar.Value = 1000;
+            playerHealthBar.Maximum = AccountData.UpgradeHP; // Lấy giá trị HP tối đa của player từ dữ liệu tài khoản
+            playerHealthBar.Value = playerHealthBar.Maximum; // Đặt giá trị thanh máu player bằng HP tối đa
+            playerHealthBar.ForeColor = Color.Lime; // Màu thanh tiến trình của người chơi (màu xanh lá)
+            playerHealthBar.BackColor = Color.Black; // Màu nền của thanh máu người chơi (màu đen)
 
-            // Reset vàng + thời gian
+            bossHealthBar.Maximum = 1000; // Máu tối đa của boss
+            bossHealthBar.Value = 1000; // Đặt giá trị thanh máu boss
+            bossHealthBar.ForeColor = Color.Red; // Màu thanh tiến trình của boss (màu đỏ)
+            bossHealthBar.BackColor = Color.Black; // Màu nền của thanh máu boss (màu đen)
+
+            // Reset vàng và thời gian
             survivalTime = 90;
             txtScore.Text = $"Gold: {AccountData.Gold}  Time: {survivalTime}";
 
@@ -77,13 +82,13 @@ namespace Kien
 
                     if (x.Bounds.IntersectsWith(boss.Bounds))
                     {
-                        bossHealthBar.Value = Math.Max(0, bossHealthBar.Value - (10 + AccountData.UpgradeDamage));
+                        bossHealthBar.Value = Math.Max(0, bossHealthBar.Value - (10 + AccountData.UpgradeDamage)); // Giảm máu boss
                         this.Controls.Remove(x);
                         x.Dispose();
 
                         if (bossHealthBar.Value == 0)
                         {
-                            EndGame(true);
+                            EndGame(true); // Kết thúc game, người chơi thắng
                         }
                     }
                 }
@@ -95,13 +100,24 @@ namespace Kien
 
                     if (x.Bounds.IntersectsWith(player.Bounds))
                     {
-                        playerHealthBar.Value = Math.Max(0, playerHealthBar.Value - 10);
+                        playerHealthBar.Value = Math.Max(0, playerHealthBar.Value - 10); // Giảm máu người chơi
+
+                        // Thay đổi màu sắc thanh máu khi máu người chơi thấp
+                        if (playerHealthBar.Value < playerHealthBar.Maximum / 2)
+                        {
+                            playerHealthBar.ForeColor = Color.Yellow; // Chuyển sang màu vàng khi máu dưới 50%
+                        }
+                        if (playerHealthBar.Value < playerHealthBar.Maximum / 4)
+                        {
+                            playerHealthBar.ForeColor = Color.Red; // Chuyển sang màu đỏ khi máu dưới 25%
+                        }
+
                         this.Controls.Remove(x);
                         x.Dispose();
 
                         if (playerHealthBar.Value == 0)
                         {
-                            EndGame(false);
+                            EndGame(false); // Kết thúc game, người chơi thua
                         }
                     }
 
@@ -158,14 +174,24 @@ namespace Kien
 
             if (win)
             {
-                AccountData.Gold += 20; // thưởng
+                AccountData.Gold += 20; // Thưởng nếu thắng
+                AccountData.Level++; // Tăng số ải khi thắng
+
+                // Tăng máu boss sau mỗi ải
+                bossHealthBar.Maximum += 100;
+                bossHealthBar.Value = bossHealthBar.Maximum; // Đặt lại máu của boss
+
+                // Cập nhật UI với số ải hiện tại
+                txtScore.Text = $"Gold: {AccountData.Gold}  Time: {survivalTime}  Level: {AccountData.Level}";
+
+                // Cập nhật số ải trong cơ sở dữ liệu
+                Database.UpdateAccountData();
             }
             else
             {
-                AccountData.Gold += 5; // thua vẫn có chút vàng
+                AccountData.Gold += 5; // Thua nhưng vẫn có chút vàng
             }
 
-            Database.UpdateAccountData();
             buttonExit.Visible = true;
         }
 
