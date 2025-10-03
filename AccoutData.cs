@@ -7,5 +7,6 @@ namespace Kien
         public static int Gold;
         public static int UpgradeHP;
         public static int UpgradeDamage;
+        public static int Level; 
     }
 }
