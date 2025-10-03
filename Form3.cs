@@ -19,6 +19,7 @@ namespace Kien
             textBoxGold.Text = AccountData.Gold.ToString();
             textBox1.Text = AccountData.UpgradeHP.ToString();     // HP
             textBox2.Text = AccountData.UpgradeDamage.ToString(); // Damage
+            textBox3.Text = AccountData.Level.ToString();         // Hiển thị số ải
         }
 
         private void buttonPlay_Click(object sender, EventArgs e)
@@ -35,6 +36,7 @@ namespace Kien
             textBoxGold.Text = AccountData.Gold.ToString();
             textBox1.Text = AccountData.UpgradeHP.ToString();
             textBox2.Text = AccountData.UpgradeDamage.ToString();
+            textBox3.Text = AccountData.Level.ToString();  // Cập nhật số ải
         }
 
         private void buttonUpgradeHP_Click(object sender, EventArgs e)
