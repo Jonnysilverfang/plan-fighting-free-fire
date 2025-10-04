@@ -12,6 +12,7 @@ pro.cs
   form5.de.cs
 -form 6.cs // chơi với người => nhật phát triễn game bắn súng với thiết kế UI/UX
   form 6.des.cs
+!!!!!!!!!!!! AE nhớ tải file Lan với Net để chạy nghe 
 
 
 
